@@ -20,6 +20,7 @@
         If System.IO.File.Exists(System.IO.Path.Combine(My.Application.Info.DirectoryPath, "DataFile.txt")) = False Then
             My.Computer.FileSystem.WriteAllText(System.IO.Path.Combine(My.Application.Info.DirectoryPath, "DataFile.txt"), "Media Player Data" + vbNewLine + "Color: Silver" + vbNewLine, False)
         End If
+        SetPlayerColor()
     End Sub
 
     Private Sub Close_Player_Click(sender As System.Object, e As System.EventArgs) Handles Close_Player.Click
@@ -34,7 +35,7 @@
         Clear_Library.Enabled = False
         If OpenFileDialog1.ShowDialog = Windows.Forms.DialogResult.OK Then
             For Each File In OpenFileDialog1.FileNames
-                My.Computer.FileSystem.WriteAllText(System.IO.Path.Combine(My.Application.Info.DirectoryPath, "DataFile.txt"), vbNewLine + File + " === " + "File Name", True)
+                My.Computer.FileSystem.WriteAllText(System.IO.Path.Combine(My.Application.Info.DirectoryPath, "DataFile.txt"), vbNewLine + "File Name" + " === " + File, True)
             Next
         End If
         MsgBox(My.Computer.FileSystem.ReadAllText(System.IO.Path.Combine(My.Application.Info.DirectoryPath, "DataFile.txt")))
@@ -45,5 +46,12 @@
 
     Private Sub Clear_Library_Click(sender As Object, e As EventArgs) Handles Clear_Library.Click
         My.Computer.FileSystem.WriteAllText(System.IO.Path.Combine(My.Application.Info.DirectoryPath, "DataFile.txt"), "Media Player Data", False)
+    End Sub
+
+    Private Sub Color_Click(sender As Object, e As EventArgs) Handles Color.Click
+        If ColorDialog1.ShowDialog = Windows.Forms.DialogResult.OK Then
+
+            SetPlayerColor()
+        End If
     End Sub
 End Class
