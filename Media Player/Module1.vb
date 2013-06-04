@@ -1,15 +1,34 @@
 ﻿Module Module1
     Function SetPlayerColor()
-        Dim ColorChange As Color = Color.FromName(Replace(Split(My.Computer.FileSystem.ReadAllText(System.IO.Path.Combine(My.Application.Info.DirectoryPath, "DataFile.txt")), vbNewLine, 2)(1), "Color: ", ""))
         Try
+            Dim ColorChange As Color = Color.FromArgb(Replace(Split(My.Computer.FileSystem.ReadAllText(System.IO.Path.Combine(My.Application.Info.DirectoryPath, "DataFile.txt")), vbNewLine, 2)(1), "Color: ", ""))
             Form1.ListBox1.BackColor = ColorChange
             Form1.ListBox2.BackColor = ColorChange
             Form1.BackColor = ColorChange
+            MsgBox(ColorChange.GetBrightness)
+            If ColorChange.GetBrightness > (1 / 3) Then
+                Form1.Label1.ForeColor = Drawing.Color.Black
+                Form1.Label2.ForeColor = Drawing.Color.Black
+                Form1.Label3.ForeColor = Drawing.Color.Black
+                Form1.ListBox1.ForeColor = Drawing.Color.Black
+                Form1.ListBox2.ForeColor = Drawing.Color.Black
+                Form1.Auto_Play.ForeColor = Drawing.Color.Black
+            Else
+                Form1.Label1.ForeColor = Drawing.Color.White
+                Form1.Label2.ForeColor = Drawing.Color.White
+                Form1.Label3.ForeColor = Drawing.Color.Blue
+                Form1.ListBox1.ForeColor = Drawing.Color.White
+                Form1.ListBox2.ForeColor = Drawing.Color.White
+                Form1.Auto_Play.ForeColor = Drawing.Color.White
+            End If
         Catch ex As Exception
-            MsgBox("Error" + vbNewLine + "Invalid color selected.", MsgBoxStyle.Critical)
+            MsgBox("Error" + vbNewLine + "Invalid color.", MsgBoxStyle.Critical)
             Form1.ListBox1.BackColor = Color.Silver
             Form1.ListBox2.BackColor = Color.Silver
             Form1.BackColor = Color.Silver
+            Dim TemporaryText As String = My.Computer.FileSystem.ReadAllText(System.IO.Path.Combine(My.Application.Info.DirectoryPath, "DataFile.txt"))
+            TemporaryText = Replace(TemporaryText, Form1.BackColor.ToArgb, Drawing.Color.Silver.ToArgb, 1, 1)
+            My.Computer.FileSystem.WriteAllText(System.IO.Path.Combine(My.Application.Info.DirectoryPath, "DataFile.txt"), TemporaryText, False)
         End Try
     End Function
 End Module
