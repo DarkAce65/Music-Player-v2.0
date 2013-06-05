@@ -38,6 +38,21 @@
         Clear_Library.Enabled = True
     End Sub
 
+    Private Sub Import_Folder_Click(sender As Object, e As EventArgs) Handles Import_Folder.Click
+        Import.Enabled = False
+        Import_Folder.Enabled = False
+        Clear_Library.Enabled = False
+        If FolderBrowserDialog1.ShowDialog = Windows.Forms.DialogResult.OK Then
+            My.Computer.FileSystem.CurrentDirectory = FolderBrowserDialog1.SelectedPath
+            For Each File In My.Computer.FileSystem.GetFiles(My.Computer.FileSystem.CurrentDirectory, FileIO.SearchOption.SearchAllSubDirectories, "*.mp3", "*.wav", "*.wmv")
+                My.Computer.FileSystem.WriteAllText(System.IO.Path.Combine(My.Application.Info.DirectoryPath, "DataFile.txt"), vbNewLine + "File Name" + " === " + File, True)
+            Next
+        End If
+        Import.Enabled = True
+        Import_Folder.Enabled = True
+        Clear_Library.Enabled = True
+    End Sub
+
     Private Sub Clear_Library_Click(sender As Object, e As EventArgs) Handles Clear_Library.Click
         My.Computer.FileSystem.WriteAllText(System.IO.Path.Combine(My.Application.Info.DirectoryPath, "DataFile.txt"), "Media Player Data", False)
     End Sub

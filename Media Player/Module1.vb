@@ -8,7 +8,7 @@
 
     Function SetPlayerColor()
         Try
-            Dim ColorChange As Color = Color.FromArgb(Replace(Split(My.Computer.FileSystem.ReadAllText(System.IO.Path.Combine(My.Application.Info.DirectoryPath, "DataFile.txt")), vbNewLine, 2)(1), "Color: ", ""))
+            Dim ColorChange As Color = Color.FromArgb(Replace(Split(My.Computer.FileSystem.ReadAllText(System.IO.Path.Combine(My.Application.Info.DirectoryPath, "DataFile.txt")), vbNewLine)(1), "Color: ", ""))
             Form1.ListBox1.BackColor = ColorChange
             Form1.ListBox2.BackColor = ColorChange
             Form1.BackColor = ColorChange
@@ -33,7 +33,7 @@
             Form1.ListBox2.BackColor = Color.Silver
             Form1.BackColor = Color.Silver
             Dim TemporaryText As String = My.Computer.FileSystem.ReadAllText(System.IO.Path.Combine(My.Application.Info.DirectoryPath, "DataFile.txt"))
-            TemporaryText = Replace(TemporaryText, Split(TemporaryText, vbNewLine, 2)(1), "Color: " + Form1.BackColor.ToArgb.ToString, 1, 1)
+            MsgBox(Split(My.Computer.FileSystem.ReadAllText(System.IO.Path.Combine(My.Application.Info.DirectoryPath, "DataFile.txt")), vbNewLine)(1))
             My.Computer.FileSystem.WriteAllText(System.IO.Path.Combine(My.Application.Info.DirectoryPath, "DataFile.txt"), TemporaryText, False)
         End Try
     End Function
