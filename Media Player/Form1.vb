@@ -5,19 +5,13 @@
 
     Private Sub Form1_FormClosing(sender As Object, e As System.Windows.Forms.FormClosingEventArgs) Handles Me.FormClosing
         AxWindowsMediaPlayer1.Ctlcontrols.stop()
-        Me.Enabled = False
-        For A As Single = 100 To 0 Step -1
-            Me.Opacity = A / 100
-            Me.Refresh()
-            Threading.Thread.Sleep(10)
-        Next
+        Form_Fade(Me)
     End Sub
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles Me.Load
+        Initialize()
         Current_User = SystemInformation.UserName
-        Auto_Play.Checked = True
         A = Nothing
-        OpenFileDialog1.Multiselect = True
         If System.IO.File.Exists(System.IO.Path.Combine(My.Application.Info.DirectoryPath, "DataFile.txt")) = False Then
             My.Computer.FileSystem.WriteAllText(System.IO.Path.Combine(My.Application.Info.DirectoryPath, "DataFile.txt"), "Media Player Data" + vbNewLine + "Color: Silver" + vbNewLine, False)
         End If

@@ -30,6 +30,8 @@
 
         'Copyright info
         Copyright.Text = My.Application.Info.Copyright
+        ApplicationTitle.ForeColor = Color.WhiteSmoke
+        Copyright.ForeColor = Color.WhiteSmoke
+        Version.ForeColor = Color.WhiteSmoke
     End Sub
-
 End Class
