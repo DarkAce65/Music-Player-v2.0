@@ -6,6 +6,11 @@
         Form1.OpenFileDialog1.Multiselect = True
     End Function
 
+    Function Add_Media(File)
+        My.Computer.FileSystem.WriteAllText(System.IO.Path.Combine(My.Application.Info.DirectoryPath, "DataFile.txt"), vbNewLine + IO.Path.GetFileName(File) + " === " + File, True)
+        Form1.ListBox1.Items.Add(IO.Path.GetFileName(File))
+    End Function
+
     Function SetPlayerColor()
         Try
             Dim ColorChange As Color = Color.FromArgb(Replace(Split(My.Computer.FileSystem.ReadAllText(System.IO.Path.Combine(My.Application.Info.DirectoryPath, "DataFile.txt")), vbNewLine)(1), "Color: ", ""))
@@ -33,7 +38,7 @@
             Form1.ListBox2.BackColor = Color.Silver
             Form1.BackColor = Color.Silver
             Dim TemporaryText As String = My.Computer.FileSystem.ReadAllText(System.IO.Path.Combine(My.Application.Info.DirectoryPath, "DataFile.txt"))
-            MsgBox(Split(My.Computer.FileSystem.ReadAllText(System.IO.Path.Combine(My.Application.Info.DirectoryPath, "DataFile.txt")), vbNewLine)(1))
+            TemporaryText = Replace(TemporaryText, Split(My.Computer.FileSystem.ReadAllText(System.IO.Path.Combine(My.Application.Info.DirectoryPath, "DataFile.txt")), vbNewLine)(1), "Color: " + Color.Silver.ToArgb.ToString)
             My.Computer.FileSystem.WriteAllText(System.IO.Path.Combine(My.Application.Info.DirectoryPath, "DataFile.txt"), TemporaryText, False)
         End Try
     End Function

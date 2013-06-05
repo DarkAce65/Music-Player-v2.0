@@ -30,7 +30,7 @@
         Clear_Library.Enabled = False
         If OpenFileDialog1.ShowDialog = Windows.Forms.DialogResult.OK Then
             For Each File In OpenFileDialog1.FileNames
-                My.Computer.FileSystem.WriteAllText(System.IO.Path.Combine(My.Application.Info.DirectoryPath, "DataFile.txt"), vbNewLine + "File Name" + " === " + File, True)
+                Add_Media(File)
             Next
         End If
         Import.Enabled = True
@@ -45,7 +45,7 @@
         If FolderBrowserDialog1.ShowDialog = Windows.Forms.DialogResult.OK Then
             My.Computer.FileSystem.CurrentDirectory = FolderBrowserDialog1.SelectedPath
             For Each File In My.Computer.FileSystem.GetFiles(My.Computer.FileSystem.CurrentDirectory, FileIO.SearchOption.SearchAllSubDirectories, "*.mp3", "*.wav", "*.wmv")
-                My.Computer.FileSystem.WriteAllText(System.IO.Path.Combine(My.Application.Info.DirectoryPath, "DataFile.txt"), vbNewLine + "File Name" + " === " + File, True)
+                Add_Media(File)
             Next
         End If
         Import.Enabled = True
@@ -54,7 +54,8 @@
     End Sub
 
     Private Sub Clear_Library_Click(sender As Object, e As EventArgs) Handles Clear_Library.Click
-        My.Computer.FileSystem.WriteAllText(System.IO.Path.Combine(My.Application.Info.DirectoryPath, "DataFile.txt"), "Media Player Data", False)
+        ListBox1.Items.Clear()
+        My.Computer.FileSystem.WriteAllText(System.IO.Path.Combine(My.Application.Info.DirectoryPath, "DataFile.txt"), "Media Player Data" + vbNewLine + Split(My.Computer.FileSystem.ReadAllText(System.IO.Path.Combine(My.Application.Info.DirectoryPath, "DataFile.txt")), vbNewLine)(1), False)
     End Sub
 
     Private Sub Color_Click(sender As Object, e As EventArgs) Handles Color.Click
