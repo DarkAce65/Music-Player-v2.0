@@ -73,4 +73,8 @@
         AxWindowsMediaPlayer1.Ctlcontrols.stop()
         ListBox2.Items.Clear()
     End Sub
+
+    Private Sub Play_Song_Click(sender As Object, e As EventArgs) Handles Play_Song.Click
+        PlayMedia()
+    End Sub
 End Class

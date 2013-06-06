@@ -5,11 +5,18 @@
         Form1.Label1.Text = "Media Player     " + Date.Today.ToShortDateString
         Form1.Auto_Play.Checked = True
         Form1.OpenFileDialog1.Multiselect = True
+        Form1.AxWindowsMediaPlayer1.settings.volume = 100
         If Split(My.Computer.FileSystem.ReadAllText(TextFilePath), vbNewLine).Length > 2 Then
             Dim Files As Array = Split(My.Computer.FileSystem.ReadAllText(TextFilePath), vbNewLine).Skip(2).ToArray
             For Each Media_Item In Files
                 Form1.ListBox1.Items.Add(Split(Media_Item, " === ")(0))
             Next
+        End If
+    End Function
+
+    Function PlayMedia()
+        If Form1.ListBox1.SelectedItem <> "" Then
+            Form1.AxWindowsMediaPlayer1.URL = Split(Split(My.Computer.FileSystem.ReadAllText(TextFilePath), vbNewLine)(Form1.ListBox1.SelectedIndex + 2), " === ")(1)
         End If
     End Function
 
@@ -24,7 +31,6 @@
         Dim TemporaryArray As Array = Split(My.Computer.FileSystem.ReadAllText(TextFilePath), vbNewLine).Skip(2).ToArray
         Dim TemporaryText As String = Split(My.Computer.FileSystem.ReadAllText(TextFilePath), vbNewLine)(0) + vbNewLine + Split(My.Computer.FileSystem.ReadAllText(TextFilePath), vbNewLine)(1)
         My.Computer.FileSystem.WriteAllText(TextFilePath, TemporaryText, False)
-        MsgBox(My.Computer.FileSystem.ReadAllText(TextFilePath))
         Array.Sort(TemporaryArray)
         For Each Item In TemporaryArray
             My.Computer.FileSystem.WriteAllText(TextFilePath, vbNewLine + Item, True)
@@ -64,7 +70,7 @@
         End Try
     End Function
 
-    Function FormFade(ByRef Form As Form)
+    Function FormFade(Form)
         Form.Enabled = False
         For A As Single = 100 To 0 Step -1
             Form.Opacity = A / 100
