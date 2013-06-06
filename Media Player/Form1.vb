@@ -66,4 +66,9 @@
             SetPlayerColor()
         End If
     End Sub
+
+    Private Sub Clear_Playlist_Click(sender As Object, e As EventArgs) Handles Clear_Playlist.Click
+        AxWindowsMediaPlayer1.Ctlcontrols.stop()
+        ListBox2.Items.Clear()
+    End Sub
 End Class

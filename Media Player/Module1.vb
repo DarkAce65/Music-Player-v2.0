@@ -4,11 +4,19 @@
         Form1.Label1.Text = "Media Player     " + Date.Today.ToShortDateString
         Form1.Auto_Play.Checked = True
         Form1.OpenFileDialog1.Multiselect = True
+        If Split(My.Computer.FileSystem.ReadAllText(System.IO.Path.Combine(My.Application.Info.DirectoryPath, "DataFile.txt")), vbNewLine).Length > 2 Then
+            Dim Files As Array = Split(My.Computer.FileSystem.ReadAllText(System.IO.Path.Combine(My.Application.Info.DirectoryPath, "DataFile.txt")), vbNewLine).Skip(2).ToArray
+            For Each Media_Item In Files
+                Form1.ListBox1.Items.Add(Split(Media_Item, " === ")(0))
+            Next
+        End If
     End Function
 
     Function Add_Media(File)
-        My.Computer.FileSystem.WriteAllText(System.IO.Path.Combine(My.Application.Info.DirectoryPath, "DataFile.txt"), vbNewLine + IO.Path.GetFileName(File) + " === " + File, True)
-        Form1.ListBox1.Items.Add(IO.Path.GetFileName(File))
+        If Split(My.Computer.FileSystem.ReadAllText(System.IO.Path.Combine(My.Application.Info.DirectoryPath, "DataFile.txt")), vbNewLine).Contains(IO.Path.GetFileName(File) + " === " + File) = False Then
+            My.Computer.FileSystem.WriteAllText(System.IO.Path.Combine(My.Application.Info.DirectoryPath, "DataFile.txt"), vbNewLine + IO.Path.GetFileName(File) + " === " + File, True)
+            Form1.ListBox1.Items.Add(IO.Path.GetFileName(File))
+        End If
     End Function
 
     Function SetPlayerColor()
