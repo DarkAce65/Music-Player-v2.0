@@ -1,27 +1,40 @@
 ﻿Module Module1
+    Dim TextFilePath As String = System.IO.Path.Combine(My.Application.Info.DirectoryPath, "DataFile.txt")
 
     Function Initialize()
         Form1.Label1.Text = "Media Player     " + Date.Today.ToShortDateString
         Form1.Auto_Play.Checked = True
         Form1.OpenFileDialog1.Multiselect = True
-        If Split(My.Computer.FileSystem.ReadAllText(System.IO.Path.Combine(My.Application.Info.DirectoryPath, "DataFile.txt")), vbNewLine).Length > 2 Then
-            Dim Files As Array = Split(My.Computer.FileSystem.ReadAllText(System.IO.Path.Combine(My.Application.Info.DirectoryPath, "DataFile.txt")), vbNewLine).Skip(2).ToArray
+        If Split(My.Computer.FileSystem.ReadAllText(TextFilePath), vbNewLine).Length > 2 Then
+            Dim Files As Array = Split(My.Computer.FileSystem.ReadAllText(TextFilePath), vbNewLine).Skip(2).ToArray
             For Each Media_Item In Files
                 Form1.ListBox1.Items.Add(Split(Media_Item, " === ")(0))
             Next
         End If
     End Function
 
-    Function Add_Media(File)
-        If Split(My.Computer.FileSystem.ReadAllText(System.IO.Path.Combine(My.Application.Info.DirectoryPath, "DataFile.txt")), vbNewLine).Contains(IO.Path.GetFileName(File) + " === " + File) = False Then
-            My.Computer.FileSystem.WriteAllText(System.IO.Path.Combine(My.Application.Info.DirectoryPath, "DataFile.txt"), vbNewLine + IO.Path.GetFileName(File) + " === " + File, True)
+    Function AddMedia(File)
+        If Split(My.Computer.FileSystem.ReadAllText(TextFilePath), vbNewLine).Contains(IO.Path.GetFileName(File) + " === " + File) = False Then
+            My.Computer.FileSystem.WriteAllText(TextFilePath, vbNewLine + IO.Path.GetFileName(File) + " === " + File, True)
             Form1.ListBox1.Items.Add(IO.Path.GetFileName(File))
         End If
     End Function
 
+    Function SortMedia()
+        Dim TemporaryArray As Array = Split(My.Computer.FileSystem.ReadAllText(TextFilePath), vbNewLine).Skip(2).ToArray
+        Dim TemporaryText As String = Split(My.Computer.FileSystem.ReadAllText(TextFilePath), vbNewLine)(0) + vbNewLine + Split(My.Computer.FileSystem.ReadAllText(TextFilePath), vbNewLine)(1)
+        My.Computer.FileSystem.WriteAllText(TextFilePath, TemporaryText, False)
+        MsgBox(My.Computer.FileSystem.ReadAllText(TextFilePath))
+        Array.Sort(TemporaryArray)
+        For Each Item In TemporaryArray
+            My.Computer.FileSystem.WriteAllText(TextFilePath, vbNewLine + Item, True)
+        Next
+        Form1.ListBox1.Sorted = True
+    End Function
+
     Function SetPlayerColor()
         Try
-            Dim ColorChange As Color = Color.FromArgb(Replace(Split(My.Computer.FileSystem.ReadAllText(System.IO.Path.Combine(My.Application.Info.DirectoryPath, "DataFile.txt")), vbNewLine)(1), "Color: ", ""))
+            Dim ColorChange As Color = Color.FromArgb(Replace(Split(My.Computer.FileSystem.ReadAllText(TextFilePath), vbNewLine)(1), "Color: ", ""))
             Form1.ListBox1.BackColor = ColorChange
             Form1.ListBox2.BackColor = ColorChange
             Form1.BackColor = ColorChange
@@ -45,13 +58,13 @@
             Form1.ListBox1.BackColor = Color.Silver
             Form1.ListBox2.BackColor = Color.Silver
             Form1.BackColor = Color.Silver
-            Dim TemporaryText As String = My.Computer.FileSystem.ReadAllText(System.IO.Path.Combine(My.Application.Info.DirectoryPath, "DataFile.txt"))
-            TemporaryText = Replace(TemporaryText, Split(My.Computer.FileSystem.ReadAllText(System.IO.Path.Combine(My.Application.Info.DirectoryPath, "DataFile.txt")), vbNewLine)(1), "Color: " + Color.Silver.ToArgb.ToString)
-            My.Computer.FileSystem.WriteAllText(System.IO.Path.Combine(My.Application.Info.DirectoryPath, "DataFile.txt"), TemporaryText, False)
+            Dim TemporaryText As String = My.Computer.FileSystem.ReadAllText(TextFilePath)
+            TemporaryText = Replace(TemporaryText, Split(My.Computer.FileSystem.ReadAllText(TextFilePath), vbNewLine)(1), "Color: " + Color.Silver.ToArgb.ToString)
+            My.Computer.FileSystem.WriteAllText(TextFilePath, TemporaryText, False)
         End Try
     End Function
 
-    Function Form_Fade(ByRef Form As Form)
+    Function FormFade(ByRef Form As Form)
         Form.Enabled = False
         For A As Single = 100 To 0 Step -1
             Form.Opacity = A / 100

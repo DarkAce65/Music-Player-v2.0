@@ -5,7 +5,7 @@
 
     Private Sub Form1_FormClosing(sender As Object, e As System.Windows.Forms.FormClosingEventArgs) Handles Me.FormClosing
         AxWindowsMediaPlayer1.Ctlcontrols.stop()
-        Form_Fade(Me)
+        FormFade(Me)
     End Sub
 
     Private Sub Form1_Load(sender As Object, e As EventArgs) Handles Me.Load
@@ -30,9 +30,10 @@
         Clear_Library.Enabled = False
         If OpenFileDialog1.ShowDialog = Windows.Forms.DialogResult.OK Then
             For Each File In OpenFileDialog1.FileNames
-                Add_Media(File)
+                AddMedia(File)
             Next
         End If
+        SortMedia()
         Import.Enabled = True
         Import_Folder.Enabled = True
         Clear_Library.Enabled = True
@@ -45,9 +46,10 @@
         If FolderBrowserDialog1.ShowDialog = Windows.Forms.DialogResult.OK Then
             My.Computer.FileSystem.CurrentDirectory = FolderBrowserDialog1.SelectedPath
             For Each File In My.Computer.FileSystem.GetFiles(My.Computer.FileSystem.CurrentDirectory, FileIO.SearchOption.SearchAllSubDirectories, "*.mp3", "*.wav", "*.wmv")
-                Add_Media(File)
+                AddMedia(File)
             Next
         End If
+        SortMedia()
         Import.Enabled = True
         Import_Folder.Enabled = True
         Clear_Library.Enabled = True
