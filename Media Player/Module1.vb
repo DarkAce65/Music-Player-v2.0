@@ -16,6 +16,8 @@
 
     Function PlayMedia()
         If Form1.ListBox1.SelectedItem <> "" Then
+            Form1.ListBox2.Items.Clear()
+            Form1.ListBox2.Items.Add(Form1.ListBox1.SelectedItem)
             Form1.AxWindowsMediaPlayer1.URL = Split(Split(My.Computer.FileSystem.ReadAllText(TextFilePath), vbNewLine)(Form1.ListBox1.SelectedIndex + 2), " === ")(1)
         End If
     End Function
@@ -36,6 +38,32 @@
             My.Computer.FileSystem.WriteAllText(TextFilePath, vbNewLine + Item, True)
         Next
         Form1.ListBox1.Sorted = True
+    End Function
+
+    Function ShufflePlaylist()
+        Dim Selected_Media As String
+        Dim Shuffled_Index As Integer
+        Dim Shuffle_Playlist As New Collection
+        If Form1.ListBox2.SelectedItem <> "" Then
+            Selected_Media = Form1.ListBox2.SelectedItem
+        Else
+            Selected_Media = Nothing
+        End If
+        Form1.ListBox2.BeginUpdate()
+        For Initial_Index As Integer = 0 To (Form1.ListBox2.Items.Count - 1)
+            Shuffle_Playlist.Add(Form1.ListBox2.Items.Item(Initial_Index))
+        Next
+        Form1.ListBox2.Items.Clear()
+        Do While Shuffle_Playlist.Count
+            Randomize()
+            Shuffled_Index = Int((Shuffle_Playlist.Count * Rnd()) + 1)
+            Form1.ListBox2.Items.Add(Shuffle_Playlist(Shuffled_Index))
+            Shuffle_Playlist.Remove(Shuffled_Index)
+        Loop
+        Form1.ListBox2.EndUpdate()
+        If Not Selected_Media = Nothing Then
+            Form1.ListBox2.SelectedItem = Selected_Media
+        End If
     End Function
 
     Function SetPlayerColor()
@@ -68,6 +96,15 @@
             TemporaryText = Replace(TemporaryText, Split(My.Computer.FileSystem.ReadAllText(TextFilePath), vbNewLine)(1), "Color: " + Color.Silver.ToArgb.ToString)
             My.Computer.FileSystem.WriteAllText(TextFilePath, TemporaryText, False)
         End Try
+    End Function
+
+    Function SongInfo(Index)
+        Dim Info As TagLib.File = TagLib.File.Create(Split(Split(My.Computer.FileSystem.ReadAllText(TextFilePath), vbNewLine)(Form1.ListBox1.SelectedIndex + 2), " === ")(1))
+        If Info.Tag.Performers.Length > 0 Then
+            Form1.Label2.Text = Info.Tag.Title + " by " + Info.Tag.Performers(0) + " (" + Info.Properties.Duration.ToString + ")"
+        Else
+            Form1.Label2.Text = Info.Tag.Title + " (" + Info.Properties.Duration.ToString + ")"
+        End If
     End Function
 
     Function FormFade(Form)
