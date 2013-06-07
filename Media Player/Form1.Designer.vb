@@ -50,6 +50,7 @@ Partial Class Form1
         Me.AddToPlaylistToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
         Me.ContextMenuStrip2 = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.RemoveFromPlaylistToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem()
+        Me.PlayNext = New System.ComponentModel.BackgroundWorker()
         CType(Me.AxWindowsMediaPlayer1, System.ComponentModel.ISupportInitialize).BeginInit()
         Me.ContextMenuStrip1.SuspendLayout()
         Me.ContextMenuStrip2.SuspendLayout()
@@ -386,5 +387,6 @@ Partial Class Form1
     Friend WithEvents AddToPlaylistToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents ContextMenuStrip2 As System.Windows.Forms.ContextMenuStrip
     Friend WithEvents RemoveFromPlaylistToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents PlayNext As System.ComponentModel.BackgroundWorker
 
 End Class

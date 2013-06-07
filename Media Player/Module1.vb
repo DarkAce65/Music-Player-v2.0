@@ -68,6 +68,16 @@
         Form1.ListBox1.Sorted = True
     End Function
 
+    Function NextItem()
+        If Form1.ListBox2.Items.IndexOf(IO.Path.GetFileName(Form1.AxWindowsMediaPlayer1.currentMedia.sourceURL)) + 2 > Form1.ListBox2.Items.Count Then
+            Form1.ListBox2.SelectedIndex = 0
+        Else
+            Form1.ListBox2.SelectedIndex = Form1.ListBox2.Items.IndexOf(IO.Path.GetFileName(Form1.AxWindowsMediaPlayer1.currentMedia.sourceURL)) + 1
+        End If
+        Form1.AxWindowsMediaPlayer1.URL = Split(Split(My.Computer.FileSystem.ReadAllText(TextFilePath), vbNewLine)(Form1.ListBox1.Items.IndexOf(Form1.ListBox2.SelectedItem) + 2), " === ")(1)
+        Form1.PlayNext.RunWorkerAsync()
+    End Function
+
     Function ShufflePlaylist()
         Dim Selected_Media As String
         Dim Shuffled_Index As Integer

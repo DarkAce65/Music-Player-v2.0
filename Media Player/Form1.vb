@@ -192,4 +192,18 @@
     Private Sub AxWindowsMediaPlayer1_MediaChange(sender As Object, e As AxWMPLib._WMPOCXEvents_MediaChangeEvent) Handles AxWindowsMediaPlayer1.MediaChange
         Label1.Text = AxWindowsMediaPlayer1.currentMedia.getItemInfo("Title") + " by " + AxWindowsMediaPlayer1.currentMedia.getItemInfo("Artist") + " (" + AxWindowsMediaPlayer1.currentMedia.durationString + ")"
     End Sub
+
+    Private Sub AxWindowsMediaPlayer1_PlayStateChange(sender As Object, e As AxWMPLib._WMPOCXEvents_PlayStateChangeEvent) Handles AxWindowsMediaPlayer1.PlayStateChange
+        If e.newState = 8 And ListBox2.Items.Count > 0 And Auto_Play.Checked = True Then
+            NextItem()
+        End If
+    End Sub
+
+    Private Sub PlayNext_DoWork(sender As Object, e As System.ComponentModel.DoWorkEventArgs) Handles PlayNext.DoWork
+        System.Threading.Thread.Sleep(200)
+    End Sub
+
+    Private Sub PlayNext_RunWorkerCompleted(sender As Object, e As System.ComponentModel.RunWorkerCompletedEventArgs) Handles PlayNext.RunWorkerCompleted
+        AxWindowsMediaPlayer1.Ctlcontrols.play()
+    End Sub
 End Class
