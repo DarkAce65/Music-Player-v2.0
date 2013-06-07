@@ -3,6 +3,7 @@
 
     Function Initialize()
         Form1.Label1.Text = "Media Player     " + Date.Today.ToShortDateString
+        Form1.Label2.Text = "Selected Song Info"
         Form1.Auto_Play.Checked = True
         Form1.OpenFileDialog1.Multiselect = True
         Form1.AxWindowsMediaPlayer1.settings.volume = 100
@@ -14,11 +15,38 @@
         End If
     End Function
 
+    Function MiniPlayer()
+        If Form1.Close_Player.Visible = True Then
+            For Each Ctrl As Control In Form1.Controls
+                Ctrl.Visible = False
+            Next
+            Form1.Label1.Visible = True
+            Form1.AxWindowsMediaPlayer1.Visible = True
+            Form1.Mini_Player.Visible = True
+            Form1.AxWindowsMediaPlayer1.Height = 45
+            Form1.Mini_Player.Location = New Point(15, 79)
+            Form1.Mini_Player.Size = New Size(200, 25)
+            Form1.Mini_Player.Text = "Switch to Full-Player"
+            Form1.Refresh()
+        Else
+            For Each Ctrl As Control In Form1.Controls
+                Ctrl.Visible = True
+            Next
+            Form1.AxWindowsMediaPlayer1.Height = 228
+            Form1.Mini_Player.Location = New Point(325, 334)
+            Form1.Mini_Player.Size = New Size(100, 50)
+            Form1.Mini_Player.Text = "Switch to Mini-Player"
+            Form1.Refresh()
+        End If
+    End Function
+
     Function PlayMedia()
         If Form1.ListBox1.SelectedItem <> "" Then
             Form1.ListBox2.Items.Clear()
             Form1.ListBox2.Items.Add(Form1.ListBox1.SelectedItem)
             Form1.AxWindowsMediaPlayer1.URL = Split(Split(My.Computer.FileSystem.ReadAllText(TextFilePath), vbNewLine)(Form1.ListBox1.SelectedIndex + 2), " === ")(1)
+        ElseIf Form1.ListBox2.SelectedItem <> "" Then
+            Form1.AxWindowsMediaPlayer1.URL = Split(Split(My.Computer.FileSystem.ReadAllText(TextFilePath), vbNewLine)(Form1.ListBox1.Items.IndexOf(Form1.ListBox2.SelectedItem) + 2), " === ")(1)
         End If
     End Function
 
@@ -98,12 +126,35 @@
         End Try
     End Function
 
+    Function Duration(Minutes)
+        Dim FinalDuration As String = Nothing
+        If Minutes > 60 And Math.Round(((Minutes - Math.Floor(Minutes)) * 60)) > 10 Then
+            FinalDuration = Math.Floor(Minutes / 60).ToString + ":"
+        ElseIf Minutes > 60 And Math.Round(((Minutes - Math.Floor(Minutes)) * 60)) < 10 Then
+            FinalDuration = Math.Floor(Minutes / 60).ToString + ":0"
+        End If
+        If Math.Round(((Minutes - Math.Floor(Minutes)) * 60)) > 10 Then
+            FinalDuration = FinalDuration + Math.Floor(Minutes).ToString + ":" + Math.Round(((Minutes - Math.Floor(Minutes)) * 60)).ToString
+        Else
+            FinalDuration = FinalDuration + Math.Floor(Minutes).ToString + ":0" + Math.Round(((Minutes - Math.Floor(Minutes)) * 60)).ToString
+        End If
+        Return FinalDuration
+    End Function
+
     Function SongInfo(Index)
         Dim Info As TagLib.File = TagLib.File.Create(Split(Split(My.Computer.FileSystem.ReadAllText(TextFilePath), vbNewLine)(Form1.ListBox1.SelectedIndex + 2), " === ")(1))
         If Info.Tag.Performers.Length > 0 Then
-            Form1.Label2.Text = Info.Tag.Title + " by " + Info.Tag.Performers(0) + " (" + Info.Properties.Duration.ToString + ")"
+            If Info.Tag.Title = Nothing Then
+                Form1.Label2.Text = Info.Name + " by " + Info.Tag.Performers(0) + " (" + Duration(Info.Properties.Duration.TotalMinutes) + ")"
+            Else
+                Form1.Label2.Text = Info.Tag.Title + " by " + Info.Tag.Performers(0) + " (" + Duration(Info.Properties.Duration.TotalMinutes) + ")"
+            End If
         Else
-            Form1.Label2.Text = Info.Tag.Title + " (" + Info.Properties.Duration.ToString + ")"
+            If Info.Tag.Title = Nothing Then
+                Form1.Label2.Text = Info.Name + " (" + Duration(Info.Properties.Duration.TotalMinutes) + ")"
+            Else
+                Form1.Label2.Text = Info.Tag.Title + " (" + Duration(Info.Properties.Duration.TotalMinutes) + ")"
+            End If
         End If
     End Function
 

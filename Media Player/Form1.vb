@@ -26,6 +26,8 @@
     End Sub
 
     Private Sub Clear_Library_Click(sender As Object, e As EventArgs) Handles Clear_Library.Click
+        Label1.Text = "Media Player     " + Date.Today.ToShortDateString
+        Label2.Text = "Selected Song Info"
         AxWindowsMediaPlayer1.Ctlcontrols.stop()
         ListBox1.Items.Clear()
         ListBox2.Items.Clear()
@@ -33,6 +35,7 @@
     End Sub
 
     Private Sub Clear_Playlist_Click(sender As Object, e As EventArgs) Handles Clear_Playlist.Click
+        Label1.Text = "Media Player     " + Date.Today.ToShortDateString
         AxWindowsMediaPlayer1.Ctlcontrols.stop()
         ListBox2.Items.Clear()
     End Sub
@@ -77,7 +80,19 @@
         End If
     End Sub
 
+    Private Sub Mini_Player_Click(sender As Object, e As System.EventArgs) Handles Mini_Player.Click
+        MiniPlayer()
+    End Sub
+
     Private Sub Play_Song_Click(sender As Object, e As EventArgs) Handles Play_Song.Click
+        PlayMedia()
+    End Sub
+
+    Private Sub ListBox1_DoubleClick(sender As Object, e As EventArgs) Handles ListBox1.DoubleClick
+        PlayMedia()
+    End Sub
+
+    Private Sub ListBox2_DoubleClick(sender As Object, e As EventArgs) Handles ListBox2.DoubleClick
         PlayMedia()
     End Sub
 
@@ -104,7 +119,7 @@
     End Sub
 
     Private Sub ListBox1_MouseLeave(sender As Object, e As EventArgs) Handles ListBox1.MouseLeave
-        AxWindowsMediaPlayer1.Focus()
+        Label1.Focus()
     End Sub
 
     Private Sub ListBox1_SelectedValueChanged(sender As Object, e As EventArgs) Handles ListBox1.SelectedValueChanged
