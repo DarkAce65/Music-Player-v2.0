@@ -33,6 +33,7 @@ Partial Class SplashScreen1
         Me.Version = New System.Windows.Forms.Label()
         Me.Copyright = New System.Windows.Forms.Label()
         Me.ApplicationTitle = New System.Windows.Forms.Label()
+        Me.By = New System.Windows.Forms.Label()
         Me.MainLayoutPanel.SuspendLayout()
         Me.DetailsLayoutPanel.SuspendLayout()
         Me.SuspendLayout()
@@ -61,13 +62,16 @@ Partial Class SplashScreen1
         Me.DetailsLayoutPanel.ColumnCount = 1
         Me.DetailsLayoutPanel.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 247.0!))
         Me.DetailsLayoutPanel.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 142.0!))
-        Me.DetailsLayoutPanel.Controls.Add(Me.Version, 0, 0)
-        Me.DetailsLayoutPanel.Controls.Add(Me.Copyright, 0, 1)
+        Me.DetailsLayoutPanel.Controls.Add(Me.Copyright, 0, 2)
+        Me.DetailsLayoutPanel.Controls.Add(Me.Version, 0, 1)
+        Me.DetailsLayoutPanel.Controls.Add(Me.By, 0, 0)
         Me.DetailsLayoutPanel.Dock = System.Windows.Forms.DockStyle.Top
         Me.DetailsLayoutPanel.Location = New System.Drawing.Point(312, 57)
         Me.DetailsLayoutPanel.Name = "DetailsLayoutPanel"
+        Me.DetailsLayoutPanel.RowCount = 3
         Me.DetailsLayoutPanel.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.0!))
         Me.DetailsLayoutPanel.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 33.0!))
+        Me.DetailsLayoutPanel.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
         Me.DetailsLayoutPanel.Size = New System.Drawing.Size(181, 79)
         Me.DetailsLayoutPanel.TabIndex = 1
         '
@@ -76,7 +80,7 @@ Partial Class SplashScreen1
         Me.Version.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.Version.BackColor = System.Drawing.Color.Transparent
         Me.Version.Font = New System.Drawing.Font("Monotype Corsiva", 12.0!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Version.Location = New System.Drawing.Point(3, 9)
+        Me.Version.Location = New System.Drawing.Point(3, 33)
         Me.Version.Name = "Version"
         Me.Version.Size = New System.Drawing.Size(241, 20)
         Me.Version.TabIndex = 1
@@ -87,9 +91,9 @@ Partial Class SplashScreen1
         Me.Copyright.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.Copyright.BackColor = System.Drawing.Color.Transparent
         Me.Copyright.Font = New System.Drawing.Font("Monotype Corsiva", 12.0!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-        Me.Copyright.Location = New System.Drawing.Point(3, 39)
+        Me.Copyright.Location = New System.Drawing.Point(3, 58)
         Me.Copyright.Name = "Copyright"
-        Me.Copyright.Size = New System.Drawing.Size(241, 40)
+        Me.Copyright.Size = New System.Drawing.Size(241, 21)
         Me.Copyright.TabIndex = 2
         Me.Copyright.Text = "Copyright"
         '
@@ -104,6 +108,17 @@ Partial Class SplashScreen1
         Me.ApplicationTitle.TabIndex = 0
         Me.ApplicationTitle.Text = "Application Title"
         Me.ApplicationTitle.TextAlign = System.Drawing.ContentAlignment.BottomLeft
+        '
+        'By
+        '
+        Me.By.Anchor = System.Windows.Forms.AnchorStyles.None
+        Me.By.BackColor = System.Drawing.Color.Transparent
+        Me.By.Font = New System.Drawing.Font("Monotype Corsiva", 15.75!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.By.Location = New System.Drawing.Point(3, 4)
+        Me.By.Name = "By"
+        Me.By.Size = New System.Drawing.Size(241, 20)
+        Me.By.TabIndex = 3
+        Me.By.Text = "By Taha Vasowalla"
         '
         'SplashScreen1
         '
@@ -123,5 +138,6 @@ Partial Class SplashScreen1
         Me.ResumeLayout(False)
 
     End Sub
+    Friend WithEvents By As System.Windows.Forms.Label
 
 End Class

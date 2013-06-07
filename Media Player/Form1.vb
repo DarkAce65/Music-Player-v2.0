@@ -61,6 +61,16 @@
         Clear_Library.Enabled = False
         If FolderBrowserDialog1.ShowDialog = Windows.Forms.DialogResult.OK Then
             My.Computer.FileSystem.CurrentDirectory = FolderBrowserDialog1.SelectedPath
+            Try
+                My.Computer.FileSystem.GetFiles(My.Computer.FileSystem.CurrentDirectory, FileIO.SearchOption.SearchAllSubDirectories, "*.mp3", "*.wav", "*.wmv")
+            Catch ex As Exception
+                MsgBox("Access to this folder or subfolder is denied.", MsgBoxStyle.Exclamation, "Error")
+                SortMedia()
+                Import.Enabled = True
+                Import_Folder.Enabled = True
+                Clear_Library.Enabled = True
+                Exit Sub
+            End Try
             For Each File In My.Computer.FileSystem.GetFiles(My.Computer.FileSystem.CurrentDirectory, FileIO.SearchOption.SearchAllSubDirectories, "*.mp3", "*.wav", "*.wmv")
                 AddMedia(File)
             Next
