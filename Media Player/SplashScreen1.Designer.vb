@@ -113,7 +113,7 @@ Partial Class SplashScreen1
         '
         Me.By.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.By.BackColor = System.Drawing.Color.Transparent
-        Me.By.Font = New System.Drawing.Font("Monotype Corsiva", 15.75!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.By.Font = New System.Drawing.Font("Monotype Corsiva", 14.25!, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.By.Location = New System.Drawing.Point(3, 4)
         Me.By.Name = "By"
         Me.By.Size = New System.Drawing.Size(241, 20)
