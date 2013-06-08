@@ -68,6 +68,31 @@
         Form1.ListBox1.Sorted = True
     End Function
 
+    Function RemoveFromPlaylist()
+        If Form1.ListBox2.SelectedItem <> "" Then
+            Dim Next_Delete As Integer = Form1.ListBox2.SelectedIndex
+            If Form1.ListBox2.Items.Count = 1 Then
+                Form1.ListBox2.Items.Clear()
+                Form1.AxWindowsMediaPlayer1.Ctlcontrols.stop()
+                Form1.Label1.Text = "Media Player"
+            Else
+                If Form1.AxWindowsMediaPlayer1.currentMedia.sourceURL <> "" Then
+                    If Form1.ListBox2.SelectedItem = IO.Path.GetFileName(Form1.AxWindowsMediaPlayer1.currentMedia.sourceURL) Then
+                        Form1.AxWindowsMediaPlayer1.Ctlcontrols.stop()
+                        Try
+                            Form1.ListBox2.SelectedIndex = Next_Delete + 1
+                        Catch ex As Exception
+                            Form1.ListBox2.SelectedIndex = 0
+                        End Try
+                        Form1.AxWindowsMediaPlayer1.URL = Split(Split(My.Computer.FileSystem.ReadAllText(TextFilePath), vbNewLine)(Form1.ListBox1.Items.IndexOf(Form1.ListBox2.SelectedItem) + 2), " === ")(1)
+                    End If
+                End If
+                Form1.ListBox2.SelectedIndex = Next_Delete
+                Form1.ListBox2.Items.Remove(Form1.ListBox2.SelectedItem)
+                End If
+        End If
+    End Function
+
     Function NextItem()
         If Form1.ListBox2.Items.IndexOf(IO.Path.GetFileName(Form1.AxWindowsMediaPlayer1.currentMedia.sourceURL)) + 2 > Form1.ListBox2.Items.Count Then
             Form1.ListBox2.SelectedIndex = 0

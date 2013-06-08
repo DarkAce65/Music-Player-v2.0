@@ -14,7 +14,7 @@
         Current_User = SystemInformation.UserName
         A = Nothing
         If System.IO.File.Exists(TextFilePath) = False Then
-            My.Computer.FileSystem.WriteAllText(TextFilePath, "Media Player Data" + vbNewLine + "Color: Silver" + vbNewLine, False)
+            My.Computer.FileSystem.WriteAllText(TextFilePath, "Media Player Data" + vbNewLine + "Color: " + Drawing.Color.Silver.ToArgb + vbNewLine, False)
         End If
         SetPlayerColor()
     End Sub
@@ -205,5 +205,11 @@
 
     Private Sub PlayNext_RunWorkerCompleted(sender As Object, e As System.ComponentModel.RunWorkerCompletedEventArgs) Handles PlayNext.RunWorkerCompleted
         AxWindowsMediaPlayer1.Ctlcontrols.play()
+    End Sub
+
+    Private Sub ContextMenuStrip2_ItemClicked(sender As Object, e As ToolStripItemClickedEventArgs) Handles ContextMenuStrip2.ItemClicked
+        If e.ClickedItem.ToString = "Remove from Playlist" Then
+            RemoveFromPlaylist()
+        End If
     End Sub
 End Class
