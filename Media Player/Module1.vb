@@ -177,16 +177,16 @@
     End Function
 
     Function SongInfo(Index)
-        Dim Info As TagLib.File = TagLib.File.Create(Split(Split(My.Computer.FileSystem.ReadAllText(TextFilePath), vbNewLine)(Form1.ListBox1.SelectedIndex + 2), " === ")(1))
+        Dim Info As TagLib.File = TagLib.File.Create(Split(Split(My.Computer.FileSystem.ReadAllText(TextFilePath), vbNewLine)(Index + 2), " === ")(1))
         If Info.Tag.Performers.Length > 0 Then
             If Info.Tag.Title = Nothing Then
-                Form1.Label2.Text = Info.Name + " by " + Info.Tag.Performers(0) + " (" + Duration(Info.Properties.Duration.TotalMinutes) + ")"
+                Form1.Label2.Text = IO.Path.GetFileNameWithoutExtension(Split(Split(My.Computer.FileSystem.ReadAllText(TextFilePath), vbNewLine)(Index + 2), " === ")(1)) + " by " + Info.Tag.Performers(0) + " (" + Duration(Info.Properties.Duration.TotalMinutes) + ")"
             Else
                 Form1.Label2.Text = Info.Tag.Title + " by " + Info.Tag.Performers(0) + " (" + Duration(Info.Properties.Duration.TotalMinutes) + ")"
             End If
         Else
             If Info.Tag.Title = Nothing Then
-                Form1.Label2.Text = Info.Name + " (" + Duration(Info.Properties.Duration.TotalMinutes) + ")"
+                Form1.Label2.Text = IO.Path.GetFileNameWithoutExtension(Split(Split(My.Computer.FileSystem.ReadAllText(TextFilePath), vbNewLine)(Index + 2), " === ")(1)) + " (" + Duration(Info.Properties.Duration.TotalMinutes) + ")"
             Else
                 Form1.Label2.Text = Info.Tag.Title + " (" + Duration(Info.Properties.Duration.TotalMinutes) + ")"
             End If

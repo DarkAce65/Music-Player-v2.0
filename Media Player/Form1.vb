@@ -129,7 +129,7 @@
     End Sub
 
     Private Sub ListBox1_MouseLeave(sender As Object, e As EventArgs) Handles ListBox1.MouseLeave
-        Label1.Focus()
+        Play_Song.Focus()
     End Sub
 
     Private Sub ListBox1_SelectedValueChanged(sender As Object, e As EventArgs) Handles ListBox1.SelectedValueChanged
@@ -142,6 +142,7 @@
     Private Sub ListBox2_SelectedValueChanged(sender As Object, e As EventArgs) Handles ListBox2.SelectedValueChanged
         If ListBox2.SelectedItem <> "" Then
             ListBox1.SelectedItem = Nothing
+            SongInfo(ListBox1.Items.IndexOf(ListBox2.SelectedItem))
         End If
     End Sub
 

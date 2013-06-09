@@ -326,6 +326,9 @@ Partial Class Form1
         Me.RemoveFromPlaylistToolStripMenuItem.Size = New System.Drawing.Size(186, 22)
         Me.RemoveFromPlaylistToolStripMenuItem.Text = "Remove from Playlist"
         '
+        'PlayNext
+        '
+        '
         'Form1
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
