@@ -7,6 +7,7 @@
         Form1.Auto_Play.Checked = True
         Form1.OpenFileDialog1.Multiselect = True
         Form1.AxWindowsMediaPlayer1.settings.volume = 100
+        Form1.ListBox1.Sorted = True
         If Split(My.Computer.FileSystem.ReadAllText(TextFilePath), vbNewLine).Length > 2 Then
             Dim Files As Array = Split(My.Computer.FileSystem.ReadAllText(TextFilePath), vbNewLine).Skip(2).ToArray
             For Each Media_Item In Files
@@ -58,14 +59,22 @@
     End Function
 
     Function SortMedia()
-        Dim TemporaryArray As Array = Split(My.Computer.FileSystem.ReadAllText(TextFilePath), vbNewLine).Skip(2).ToArray
-        Dim TemporaryText As String = Split(My.Computer.FileSystem.ReadAllText(TextFilePath), vbNewLine)(0) + vbNewLine + Split(My.Computer.FileSystem.ReadAllText(TextFilePath), vbNewLine)(1)
-        My.Computer.FileSystem.WriteAllText(TextFilePath, TemporaryText, False)
-        Array.Sort(TemporaryArray)
-        For Each Item In TemporaryArray
+        Form1.ListBox1.Sorted = True
+        Dim TempArray As Array = Form1.ListBox1.Items.Cast(Of String).ToArray
+        Dim DisplayAndPath As Array = Split(My.Computer.FileSystem.ReadAllText(TextFilePath), vbNewLine).Skip(2).ToArray
+        Dim NameAndColor As String = Split(My.Computer.FileSystem.ReadAllText(TextFilePath), vbNewLine)(0) + vbNewLine + Split(My.Computer.FileSystem.ReadAllText(TextFilePath), vbNewLine)(1)
+        My.Computer.FileSystem.WriteAllText(TextFilePath, NameAndColor, False)
+        Form1.ListBox1.Items.Clear()
+        For Each Item In DisplayAndPath
+            Form1.ListBox1.Items.Add(Item)
+        Next
+        Array.Clear(DisplayAndPath, 0, DisplayAndPath.Length)
+        Form1.ListBox1.Items.CopyTo(DisplayAndPath, 0)
+        Form1.ListBox1.Items.Clear()
+        Form1.ListBox1.Items.AddRange(TempArray)
+        For Each Item In DisplayAndPath
             My.Computer.FileSystem.WriteAllText(TextFilePath, vbNewLine + Item, True)
         Next
-        Form1.ListBox1.Sorted = True
     End Function
 
     Function RemoveFromPlaylist()

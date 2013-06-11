@@ -30,6 +30,15 @@
 
         'Copyright info
         Copyright.Text = My.Application.Info.Copyright
+        Dim Border As New Drawing2D.GraphicsPath()
+        Border.StartFigure()
+        Border.AddArc(New Rectangle(0, 0, 20, 20), 180, 90)
+        Border.AddLine(20, 0, Me.Width - 20, 0)
+        Border.AddArc(New Rectangle(Me.Width - 20, 0, 20, 20), -90, 90)
+        Border.AddLine(Me.Width, 20, Me.Width, Me.Height)
+        Border.AddLine(Me.Width, Me.Height, 0, Me.Height)
+        Border.CloseFigure()
+        Me.Region = New Region(Border)
         ApplicationTitle.ForeColor = Color.WhiteSmoke
         By.ForeColor = Color.WhiteSmoke
         Copyright.ForeColor = Color.WhiteSmoke
